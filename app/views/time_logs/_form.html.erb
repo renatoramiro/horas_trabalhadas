@@ -1,0 +1,55 @@
+<%= form_for([@current_user, @time_log]) do |f| %>
+  <% if @time_log.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@time_log.errors.count, "error") %> prohibited this time_log from being saved:</h2>
+
+      <ul>
+      <% @time_log.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.hidden_field :user_id %>
+
+  <p>Usuário <%= @time_log.user.name %></p>
+  <p>
+    <%= f.label :project, "Projeto" %>:
+    <%= collection_select :project, :id, Project.all, :id, :name, :include_blank => "Selecione o projeto"%>
+  </p>
+  <p>
+    <%= f.label :task_type_id, "Tipo de tarefa" %>:
+    <%= f.collection_select :task_type_id, [], :id, :name, :include_blank => "-" %>
+  </p>
+  <p>
+    <%= f.label :task_date, "Data" %>: <%= f.date_select :task_date %>
+  </p>
+  <p>
+    <%= f.label :worked_hours, "Horas Trabalhadas" %>: <%= f.time_select :worked_hours %>
+  </p>
+  <p>
+    <%= f.label :description, "Descrição" %>:<br />
+    <%= f.text_area :description, :rows => 5, :cols => 60 %>
+  </p>
+  <p>
+    <%= f.submit %> || <%= link_to "Novo Registro", new_user_time_log_path(@current_user) %>
+  </p>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+   $("#project_id").change(function() {
+      getTaskTypesByProject("id="+$("#project_id").val());
+    });
+  });
+
+  function getTaskTypesByProject(id) {
+    $.getJSON("/task_types_by_project", id, function(j) {
+      var options = '<option value="">Selecione uma tarefa</option>';
+      $.each(j.tts, function(i, item) {
+        options += '<option value="' + item.id + '">' + item.n + '</option>';
+      });
+      $("#time_log_task_type_id").html(options);
+    });
+  }
+</script>

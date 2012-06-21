@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  joined: 2012-05-29
+  leaved: 2012-05-29
+  user: 
+  project: 
+
+two:
+  joined: 2012-05-29
+  leaved: 2012-05-29
+  user: 
+  project: 

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user: 
+  task_type: 
+  description: MyText
+  task_date: 2012-05-29
+
+two:
+  user: 
+  task_type: 
+  description: MyText
+  task_date: 2012-05-29

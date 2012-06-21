@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Controle de Horas Trabalhadas</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<% if notice %>
+	<p style="color: green"><%= notice %></p>
+<% end -%>
+<div id="projects">
+	<h2>Administração</h2>
+	<ul>
+		<li><%= link_to "Usuários", users_path %></li>
+		<li><%= link_to "Projetos", projects_path %></li>
+		<li><%= link_to "Registrar Horas", new_user_time_log_path(@current_user) %></li>
+		<li><%= link_to "Gerar Relatório", new_summary_report_path %></li>
+		<li><%= link_to "Sair do Sistema", sessions_path, :method => :delete %></li>
+	</ul>
+	<h2>Meus Projetos</h2>
+	<ul>
+		<% @current_user.projects.each do |project| %>
+			<li><%= link_to project.name, project %> - 
+				<%= link_to "Registrar Horas", new_user_time_log_path(@current_user, :project_id => project.id) %></li>
+		<% end -%>
+	</ul>
+</div>
+<div id="contents">
+	<%= yield %>
+</div>
+<!--<footer>
+	<a href="http://<%= request.domain %>:3000<%= request.fullpath %>">
+		Url Atual
+	</a> or 
+	<%= link_to "Isso", url_for(:only_path => true) %> or <%= link_to "Ou isso", request.fullpath %> or <%= link_to "Ou ainda isso", request.original_fullpath %>
+</footer>-->
+</body>
+</html>

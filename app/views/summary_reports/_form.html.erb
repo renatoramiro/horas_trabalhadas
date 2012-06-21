@@ -1,0 +1,47 @@
+<%= form_for(@summary_report) do |f| %>
+  <% if @summary_report.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@summary_report.errors.count, "error") %> prohibited this summary_report from being saved:</h2>
+
+      <ul>
+      <% @summary_report.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <b><%= f.label :project, "Projeto" %>:</b>
+    <%= collection_select :project, :id, @projects, :id, :name, :include_blank => "Selecione o projeto"%>
+  </div>
+  <div class="field">
+    <b><%= f.label :task_type_id, "Tipo de tarefa" %>:</b>
+    <%= f.collection_select :task_type_id, [], :id, :name, :include_blank => true %>
+  </div>
+  <div class="field">
+    <b><%= f.label :user, "Usuário" %>:</b>
+    <%= collection_select :user, :id, @users, :id, :name, :include_blank => "Selecione o usuário" %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Gerar Relatório" %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+   $("#project_id").change(function() {
+      getTaskTypesByProject("id="+$("#project_id").val());
+    });
+  });
+
+  function getTaskTypesByProject(id) {
+    $.getJSON("/task_types_by_project", id, function(j) {
+      var options = '<option value="">Selecione uma tarefa</option>';
+      $.each(j.tts, function(i, item) {
+        options += '<option value="' + item.id + '">' + item.n + '</option>';
+      });
+      $("#summary_report_task_type_id").html(options);
+    });
+  }
+</script>

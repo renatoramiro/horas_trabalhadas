@@ -1,0 +1,29 @@
+<h1>Listing project_memberships</h1>
+
+<table>
+  <tr>
+    <th>Joined</th>
+    <th>Leaved</th>
+    <th>User</th>
+    <th>Project</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @project_memberships.each do |project_membership| %>
+  <tr>
+    <td><%= project_membership.joined %></td>
+    <td><%= project_membership.leaved %></td>
+    <td><%= project_membership.user %></td>
+    <td><%= project_membership.project %></td>
+    <td><%= link_to 'Show', project_membership %></td>
+    <td><%= link_to 'Edit', edit_project_membership_path(project_membership) %></td>
+    <td><%= link_to 'Destroy', project_membership, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Project membership', new_project_membership_path %>

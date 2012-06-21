@@ -1,0 +1,12 @@
+<h3>Entrar no sistema</h3>
+<%= form_tag :controller => "sessions", :action => :create do %>
+	<p>
+		<label form_tag="login">Nome do usuário ou email</label><br />
+		<%= text_field_tag :login %>
+	</p>
+	<p>
+		<label form_tag="password">Senha</label><br />
+		<%= password_field_tag :password %>
+	</p>
+	<p><%= submit_tag "Log on" %></p>
+<% end -%>
